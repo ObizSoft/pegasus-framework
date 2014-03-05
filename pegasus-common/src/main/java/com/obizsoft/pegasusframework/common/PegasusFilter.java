@@ -11,19 +11,13 @@ import javax.servlet.annotation.WebInitParam;
 
 import org.apache.wicket.protocol.http.WicketFilter;
 
-@WebFilter(value = "/*", initParams = { @WebInitParam(name = "applicationClassName", value = "com.obizsoft.pegasus.framework.common.PegasusWicketApplication"), 
+@WebFilter(value = "/*", initParams = { @WebInitParam(name = "applicationClassName", value = "com.obizsoft.pegasusframework.common.PegasusWicketApplication"), 
 		@WebInitParam(name="filterMappingUrlPattern", value="/*") })
 public class PegasusFilter extends WicketFilter {
 	public void 
 		doFilter(ServletRequest request, 
 				ServletResponse response, FilterChain chain) throws IOException, ServletException
-	{
-		String navId = request.getParameter("navId");
-		if(navId != null){
-			System.out.println("Filter out the request parameter : " + navId);
-		}
-		
-		
+	{	
 		super.doFilter(request, response, chain);
 	}
 }

@@ -1,6 +1,8 @@
 package com.obizsoft.pegasusframework.common;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -21,89 +23,8 @@ public class Menu extends WebComponent {
 
 	private static Logger logger = LoggerFactory.getLogger(Menu.class);
 
-	
-
-//	public class SubmenuFragment extends Fragment {
-//
-//		/**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 1L;
-//
-//		public SubmenuFragment(String id, String markupId,
-//				MarkupContainer markupProvider, MenuItem model) {
-//			super(id, markupId, markupProvider);
-//
-//			add(new ListView<MenuItem>("submenuList", model.getChildren()) {
-//				@Override
-//				protected void populateItem(ListItem<MenuItem> item) {
-//					PageParameters pars = new PageParameters();
-//					pars.add("navId", item.getModelObject().getNavId());
-//
-//					BookmarkablePageLink submenuActionLink = new BookmarkablePageLink(
-//							"submenuActionLink", HomePage.class, pars);
-//
-//					item.add(submenuActionLink);
-//
-//					Label submenuNameLabel = new Label("submenuName",
-//							new PropertyModel(item.getModel(), "name"));
-//					submenuNameLabel.setRenderBodyOnly(true);
-//					submenuActionLink.add(submenuNameLabel);
-//					if (item.getModelObject().isCurrent()) {
-//						item.add(new AttributeModifier("class", "current"));
-//					}
-//				}
-//			});
-//		}
-//
-//	}
-
-	public Menu(String id, IModel<List<? extends MenuItem>> items) {
-		super(id, items);
-
-//		logger.debug(this.getPage().toString());
-
-		//
-		// add(new ListView<MenuItem>("navList", navItems) {
-		// @Override
-		// protected void populateItem(ListItem<MenuItem> item) {
-		//
-		//
-		// PageParameters pars = new PageParameters();
-		// pars.add("navId", item.getModelObject().getNavId());
-		//
-		// BookmarkablePageLink actionLink =
-		// new BookmarkablePageLink("actionLink", HomePage.class, pars);
-		//
-		// item.add(actionLink);
-		//
-		// Label nameLabel = new Label("name",
-		// new PropertyModel(item.getModel(), "name"));
-		//
-		// nameLabel.setRenderBodyOnly(true);
-		// actionLink.add(nameLabel);
-		// if(!item.getModelObject().hasChildren()){
-		// if(item.getModelObject().isCurrent()){
-		// item.add(new AttributeModifier("class", "current"));
-		// }
-		// Fragment fragment = new Fragment ("submenuArea", "emptySubmenuFrag",
-		// this);
-		// fragment.setRenderBodyOnly(true);
-		// item.add(fragment);
-		//
-		// }else{
-		// if(item.getModelObject().isCurrent()){
-		// item.add(new AttributeModifier("class", "open"));
-		// }
-		// Fragment fragment =
-		// new SubmenuFragment ("submenuArea", "submenuFrag", this,
-		// item.getModelObject());
-		// fragment.setRenderBodyOnly(true);
-		// item.add(fragment);
-		// }
-		//
-		// }
-		// });
+	public Menu(String id, IModel<MenuItem> item) {
+		super(id, item);
 	}
 
 	public void onComponentTagBody(MarkupStream markupStream,
@@ -114,32 +35,93 @@ public class Menu extends WebComponent {
 	}
 
 	private void renderMenu(StringBuilder markup) {
-		List<? extends MenuItem> items = (List<? extends MenuItem>) getDefaultModelObject();
-		markup.append("<ul id=\"nav\">");
+		MenuItem item = (MenuItem) getDefaultModelObject();
+
 		MenuItem current = null;
 		if (getPage() instanceof MenuPage) {
 			current = ((MenuPage) getPage()).getItem();
 		}
+
+		Set<MenuItem> selected = new HashSet<MenuItem>();
+		while (current != null) {
+			selected.add(current);
+			current = current.getParent();
+		}
+		renderItem(markup, item, selected);
 		
-		for (MenuItem item : items) {
-			CharSequence url = urlFor(item.getPage(), null);
-			String label = Strings.escapeMarkup(item.getLabel().getObject()).toString();
-			item.getLabel().detach();
-			
-			markup.append("<li ");
-			if (item.equals(current)) {
-				markup.append(" class='current'");
+		// markup.append("<ul id=\"nav\">");
+		//
+		// for (MenuItem item : items) {
+		// CharSequence url = "#";
+		// if(item.getPage() != null){
+		// url = urlFor(item.getPage(), null);
+		// }
+		//
+		// String label =
+		// Strings.escapeMarkup(item.getLabel().getObject()).toString();
+		// item.getLabel().detach();
+		//
+		// markup.append("<li ");
+		// if (item.equals(current)) {
+		// markup.append(" class='current'");
+		// }
+		// markup.append(">");
+		// markup.append("<a ");
+		// markup.append("href='").append(url).append("'>");
+		// markup.append("<i class=\"icon-table\"></i>");
+		// markup.append(label);
+		// markup.append("</a>");
+		// markup.append("</li>");
+		// }
+		// markup.append("</ul>");
+
+	}
+
+	private void renderItem(StringBuilder markup, MenuItem item,
+			Set<MenuItem> selected) {
+		logger.debug("====> Parent == " + item.getParent());
+		if (item.getParent() == null) {
+			markup.append("<ul id=\"nav\">");
+		} else {
+			markup.append("<ul class=\"sub-menu\" style=\"display: block;\">");
+		}
+
+		for (MenuItem child : item.getChildren()) {
+			CharSequence url = "#";
+			if (child.getPage() != null) {
+				url = urlFor(child.getPage(), null);
 			}
+
+			String label = Strings.escapeMarkup(child.getLabel().getObject())
+					.toString();
+			child.getLabel().detach();
+
+			markup.append("<li ");
+			if (selected.contains(child)) {
+				if(child.getChildren().size() > 0){
+					markup.append(" class='current open'");
+				}else{
+					markup.append(" class='current'");
+				}
+			}
+			
 			markup.append(">");
 			markup.append("<a ");
 			markup.append("href='").append(url).append("'>");
-			markup.append("<i class=\"icon-table\"></i>");
+			
+			markup.append("<i class=\"icon-angle-right\"></i>");
+			
 			markup.append(label);
 			markup.append("</a>");
+
+			// sample code renders the anchor tag for the menu item
+			if (selected.contains(child) && child.getChildren().size() > 0) {
+				
+				renderItem(markup, child, selected);
+			}
+
 			markup.append("</li>");
 		}
 		markup.append("</ul>");
-		
 	}
-
 }

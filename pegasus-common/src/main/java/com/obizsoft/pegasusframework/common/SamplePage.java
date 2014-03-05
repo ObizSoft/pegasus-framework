@@ -2,20 +2,20 @@ package com.obizsoft.pegasusframework.common;
 
 
 
-public class DemoPage extends BasePage {
+public class SamplePage extends BasePage {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public DemoPage(){
+	public SamplePage(){
 		super();
 	}
 
 	@Override
 	public MenuItem getItem() {
-		return DEMO;
+		return CommonModuleManager.SAMPLE;
 	}
 	
 }
