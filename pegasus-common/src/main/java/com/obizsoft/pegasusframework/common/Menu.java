@@ -1,7 +1,6 @@
 package com.obizsoft.pegasusframework.common;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.wicket.markup.ComponentTag;
@@ -11,8 +10,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.obizsoft.pegasusframework.common.MenuPage;
 
 public class Menu extends WebComponent {
 
@@ -79,13 +76,14 @@ public class Menu extends WebComponent {
 
 	private void renderItem(StringBuilder markup, MenuItem item,
 			Set<MenuItem> selected) {
-		logger.debug("====> Parent == " + item.getParent());
+		
+		
 		if (item.getParent() == null) {
 			markup.append("<ul id=\"nav\">");
 		} else {
 			markup.append("<ul class=\"sub-menu\" style=\"display: block;\">");
 		}
-
+		
 		for (MenuItem child : item.getChildren()) {
 			CharSequence url = "#";
 			if (child.getPage() != null) {
@@ -95,7 +93,10 @@ public class Menu extends WebComponent {
 			String label = Strings.escapeMarkup(child.getLabel().getObject())
 					.toString();
 			child.getLabel().detach();
-
+			
+			logger.debug("====> Item : " + label
+					+ " Parent == " + item.getParent());
+			
 			markup.append("<li ");
 			if (selected.contains(child)) {
 				if(child.getChildren().size() > 0){
@@ -115,7 +116,8 @@ public class Menu extends WebComponent {
 			markup.append("</a>");
 
 			// sample code renders the anchor tag for the menu item
-			if (selected.contains(child) && child.getChildren().size() > 0) {
+			//selected.contains(child) && 
+			if (child.getChildren().size() > 0) {
 				
 				renderItem(markup, child, selected);
 			}
