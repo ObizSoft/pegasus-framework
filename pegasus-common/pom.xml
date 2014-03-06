@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.obizsoft.pegasusframework</groupId>
-    <artifactId>pegasus-common</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Pegasus Framework base component</name>
-    <url>http://maven.apache.org</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>com.obizsoft.pegasusframework</groupId>
+		<artifactId>pegasus-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 
-    <properties>
-		<wicket.version>6.13.0</wicket.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.6</java-version>
-        <spring-version>4.0.2.RELEASE</spring-version>
-    </properties>
-    
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>pegasus-common</artifactId>
+	<packaging>jar</packaging>
+	<name>Pegasus Framework base component</name>
+	<url>http://maven.apache.org</url>
 
-    <dependencies>
-        <!-- Servlet 3.0 API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
+	<dependencies>
+		<!-- Servlet 3.0 API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-version}</version>
+			<scope>provided</scope>
+		</dependency>
 
-		<!--  WICKET DEPENDENCIES -->
+		<!-- WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
@@ -41,13 +39,9 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring-version}</version>
 		</dependency>
-		<!-- OPTIONAL DEPENDENCY
-		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
-		</dependency>
-		-->
+		<!-- OPTIONAL DEPENDENCY <dependency> <groupId>org.apache.wicket</groupId> 
+			<artifactId>wicket-extensions</artifactId> <version>${wicket.version}</version> 
+			</dependency> -->
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
@@ -61,17 +55,17 @@
 			<version>1.2.16</version>
 		</dependency>
 
-        <!-- test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>		
-    </dependencies>
-    <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-        <resources>
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<resources>
 			<resource>
 				<filtering>false</filtering>
 				<directory>src/main/resources</directory>
@@ -87,20 +81,20 @@
 				</excludes>
 			</resource>
 		</resources>
-		
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>${java-version}</source>
-                    <target>${java-version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>			
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -110,7 +104,7 @@
 					<wtpversion>${wtp.version}</wtpversion>
 				</configuration>
 			</plugin>
-            <plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.2</version>
@@ -124,10 +118,10 @@
 					</execution>
 				</executions>
 			</plugin>
-        </plugins>
-    </build>
-    
-    <repositories>
+		</plugins>
+	</build>
+
+	<repositories>
 		<repository>
 			<id>Apache Nexus</id>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
@@ -139,34 +133,34 @@
 			</snapshots>
 		</repository>
 		<repository>
-	        <id>obizsoft-internal-snapshots</id>
-	        <name>obizsoft-internal-snapshots</name>
-	        <url>http://www.obizsoft.net:8080/artifactory/ext-snapshot-local</url>
-	        <releases>
+			<id>obizsoft-internal-snapshots</id>
+			<name>obizsoft-internal-snapshots</name>
+			<url>http://www.obizsoft.net:8080/artifactory/ext-snapshot-local</url>
+			<releases>
 				<enabled>false</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-	    </repository>
-	    <repository>
-	        <id>obizsoft-internal-releases</id>
-	        <name>obizsoft-internal-releases</name>
-	        <url>http://www.obizsoft.net:8080/artifactory/ext-release-local</url>
-	        <releases>
+		</repository>
+		<repository>
+			<id>obizsoft-internal-releases</id>
+			<name>obizsoft-internal-releases</name>
+			<url>http://www.obizsoft.net:8080/artifactory/ext-release-local</url>
+			<releases>
 				<enabled>true</enabled>
 			</releases>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
-	    </repository>
+		</repository>
 	</repositories>
 	<distributionManagement>
-	    <snapshotRepository>
-	        <id>obizsoft-internal-snapshots</id>
-	        <name>obizsoft-internal-snapshots</name>
-	        <url>http://www.obizsoft.net:8080/artifactory/ext-snapshot-local</url>
-	    </snapshotRepository>
+		<snapshotRepository>
+			<id>obizsoft-internal-snapshots</id>
+			<name>obizsoft-internal-snapshots</name>
+			<url>http://www.obizsoft.net:8080/artifactory/ext-snapshot-local</url>
+		</snapshotRepository>
 	</distributionManagement>
-    
+
 </project>
