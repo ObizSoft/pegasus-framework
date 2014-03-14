@@ -81,7 +81,11 @@ public class Menu extends WebComponent {
 		if (item.getParent() == null) {
 			markup.append("<ul id=\"nav\">");
 		} else {
-			markup.append("<ul class=\"sub-menu\" style=\"display: block;\">");
+			markup.append("<ul class=\"sub-menu\" ");
+			if (selected.contains(item)){
+				markup.append(" style=\"display: block;\" ");
+			}
+			markup.append(">");
 		}
 		
 		for (MenuItem child : item.getChildren()) {
@@ -109,10 +113,20 @@ public class Menu extends WebComponent {
 			markup.append(">");
 			markup.append("<a ");
 			markup.append("href='").append(url).append("'>");
-			
 			markup.append("<i class=\"icon-angle-right\"></i>");
 			
 			markup.append(label);
+			
+			if(child.getChildren().size() > 0){
+				if (selected.contains(child)) {
+					markup.append("<i class=\"arrow icon-angle-down\"></i>");
+				}else{
+					markup.append("<i class=\"arrow icon-angle-left\"></i>");
+				}
+			}
+			
+			
+			
 			markup.append("</a>");
 
 			// sample code renders the anchor tag for the menu item

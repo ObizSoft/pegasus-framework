@@ -36,6 +36,7 @@ public class PegasusWicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+		getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		
 		/**
