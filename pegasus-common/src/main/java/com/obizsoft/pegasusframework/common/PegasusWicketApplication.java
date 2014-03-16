@@ -2,8 +2,9 @@ package com.obizsoft.pegasusframework.common;
 
 import java.util.Map;
 
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * 
  * @see com.obizsoft.Start#main(String[])
  */
-public class PegasusWicketApplication extends WebApplication
+public class PegasusWicketApplication extends AuthenticatedWebApplication
 {
 	
 	Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
@@ -36,7 +37,14 @@ public class PegasusWicketApplication extends WebApplication
 	public void init()
 	{
 		super.init();
+		
+		/**
+		 * To make sure Wicket use UTF-8 in parsing html template and generate the response
+		 * we explicitly set the application settings to UTF-8 via below tow lines.
+		 */
+		getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
 		getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
+		
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		
 		/**
@@ -54,5 +62,15 @@ public class PegasusWicketApplication extends WebApplication
 			}
 		}
 
+	}
+
+	@Override
+	protected Class<? extends WebPage> getSignInPageClass() {
+		return LoginPage.class;
+	}
+
+	@Override
+	protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
+		return PegasusAuthenticatedWebSession.class;
 	}
 }

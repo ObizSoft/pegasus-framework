@@ -162,7 +162,9 @@ var Login = function() {
 					//
 					// In reality, you want to remove this submitHandler
 					// to use the native browser submitting
-					window.location.href = "index.html";
+					//window.location.href = "index.html";
+					
+					$(form).submit();
 				}
 			});
 		}

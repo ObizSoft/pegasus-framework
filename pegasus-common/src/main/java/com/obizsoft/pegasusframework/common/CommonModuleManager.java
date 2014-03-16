@@ -1,10 +1,10 @@
 package com.obizsoft.pegasusframework.common;
 
 
+import java.util.List;
+
 import org.apache.wicket.model.Model;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class CommonModuleManager implements ModuleManager {

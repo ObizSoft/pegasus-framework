@@ -1,8 +1,5 @@
 package com.obizsoft.pegasusframework.common;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -28,13 +25,6 @@ public abstract class BasePage extends WebPage implements MenuPage {
 		private static final long serialVersionUID = 1L;
 
 			protected MenuItem load() {
-//				 List<MenuItem> items = new ArrayList<MenuItem>();
-//				 
-////				 for(MenuItem item : ModuleRegistry.getRootMenu().getChildren()){
-////					 items.add(item);
-////				 }
-//				 items.add(ModuleRegistry.getRootMenu());
-//				 return items;
 				return ModuleRegistry.getRootMenu();
 			 }
 	}
