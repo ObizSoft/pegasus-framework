@@ -19,6 +19,11 @@
 	</modules>
 
 	<distributionManagement>
+	    <releaseRepository>
+			<id>obizsoft-internal-releases</id>
+			<name>obizsoft-internal-releases</name>
+			<url>http://www.obizsoft.net:8080/artifactory/ext-release-local</url>
+		</releaseRepository>
 		<snapshotRepository>
 			<id>obizsoft-internal-snapshots</id>
 			<name>obizsoft-internal-snapshots</name>

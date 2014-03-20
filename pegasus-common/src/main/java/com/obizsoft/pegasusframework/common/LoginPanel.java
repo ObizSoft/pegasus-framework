@@ -28,7 +28,7 @@ public class LoginPanel extends Panel {
 	private boolean includeRememberMe = true;
 
 	/** True if the user should be remembered via form persistence (cookies) */
-	private boolean rememberMe = true;
+	private boolean rememberMe = false;
 
 	/** password. */
 	private String password;
@@ -57,6 +57,8 @@ public class LoginPanel extends Panel {
 
 		this.includeRememberMe = includeRememberMe;
 
+		// Create feedback panel and add to page
+		add(new LoginFeedbackPanel("feedback"));
 		// Add sign-in form to page, passing feedback panel as
 		// validation error handler
 		add(new SignInForm(SIGN_IN_FORM));
