@@ -528,6 +528,7 @@ span.red {
   font-size: 13px;
   text-align: left;
 }
+.dropdown-menu > li > a > span > i,
 .dropdown-menu > li > a > i,
 .dropdown-menu > li > i {
   margin-right: 5px;

@@ -25,6 +25,8 @@ public class HeaderPanel extends Panel {
 			
 		}.add(new Label("logout", "<i class=\"icon-key\"></i> Log Out").
 				setEscapeModelStrings(false)));
+		
+		add(new Label("username", ((PegasusAuthenticatedWebSession)AuthenticatedWebSession.get()).getUserName()));
 	}
 
 }

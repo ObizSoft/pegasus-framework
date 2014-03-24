@@ -3,7 +3,7 @@ package com.obizsoft.pegasusframework.common;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 
 
-@AuthorizeInstantiation("ADMIN")
+@AuthorizeInstantiation("ROLE_ADMIN")
 public class SamplePage extends BasePage {
 
 	/**
