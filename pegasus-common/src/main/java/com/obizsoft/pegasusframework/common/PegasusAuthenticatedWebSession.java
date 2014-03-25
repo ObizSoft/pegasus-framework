@@ -1,5 +1,8 @@
 package com.obizsoft.pegasusframework.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.injection.Injector;
@@ -24,6 +27,15 @@ public class PegasusAuthenticatedWebSession extends AuthenticatedWebSession {
 	private static final Logger logger = LoggerFactory
 			.getLogger(PegasusAuthenticatedWebSession.class);
 
+	private Map<String, String> userSettings = new HashMap<String, String>();
+	
+	public void addSetting(String key, String value){
+		userSettings.put(key, value);
+	}
+	public String getSetting(String key){
+		return userSettings.get(key);
+	}
+	
 	@SpringBean(name = "authenticationManager")
 	private AuthenticationManager authenticationManager;
 
